@@ -380,13 +380,13 @@
     <span class="status-dot" id="statusDot" title="Prêt"></span>
     
     <div class="toolbar-actions">
-      <button class="toolbar-btn" onclick="exportChat()" title="Exporter la conversation">
+      <button class="toolbar-btn" id="exportBtn" title="Exporter la conversation">
         <i class="ti ti-download"></i> Export
       </button>
-      <button class="toolbar-btn" onclick="clearChat()" title="Nouvelle conversation">
+      <button class="toolbar-btn" id="clearBtn" title="Nouvelle conversation">
         <i class="ti ti-trash"></i> Effacer
       </button>
-      <button class="toolbar-btn" onclick="toggleFullscreen()" title="Plein écran">
+      <button class="toolbar-btn" id="fullscreenBtn" title="Plein écran">
         <i class="ti ti-maximize"></i>
       </button>
     </div>
@@ -396,7 +396,7 @@
     <!-- Sidebar avec historique -->
     <div class="sidebar">
       <div class="sidebar-header">
-        <button class="new-chat-btn" onclick="newChat()">
+        <button class="new-chat-btn" id="newChatBtn">
           <i class="ti ti-plus"></i> Nouvelle conversation
         </button>
       </div>
@@ -407,19 +407,19 @@
       </div>
       
       <div class="sidebar-section" style="margin-top: 12px;">Navigation</div>
-      <div class="sidebar-item active" onclick="switchTab('chat')">
+      <div class="sidebar-item active" data-tab="chat">
         <i class="ti ti-message-dots"></i> Chat agent
       </div>
-      <div class="sidebar-item" onclick="switchTab('templates')">
+      <div class="sidebar-item" data-tab="templates">
         <i class="ti ti-layout-grid"></i> Templates SCL
       </div>
-      <div class="sidebar-item" onclick="switchTab('snippets')">
+      <div class="sidebar-item" data-tab="snippets">
         <i class="ti ti-code"></i> Snippets
       </div>
-      <div class="sidebar-item" onclick="switchTab('stats')">
+      <div class="sidebar-item" data-tab="stats">
         <i class="ti ti-chart-bar"></i> Statistiques
       </div>
-      <div class="sidebar-item" onclick="switchTab('config')">
+      <div class="sidebar-item" data-tab="config">
         <i class="ti ti-settings"></i> Configuration
       </div>
     </div>
@@ -427,19 +427,19 @@
     <div class="main">
       <!-- Tabs -->
       <div class="tabs">
-        <div class="tab active" onclick="switchMainTab('chat')">
+        <div class="tab active" data-tab="chat">
           <i class="ti ti-message-dots"></i> Chat
         </div>
-        <div class="tab" onclick="switchMainTab('templates')">
+        <div class="tab" data-tab="templates">
           <i class="ti ti-layout-grid"></i> Templates
         </div>
-        <div class="tab" onclick="switchMainTab('snippets')">
+        <div class="tab" data-tab="snippets">
           <i class="ti ti-code"></i> Snippets
         </div>
-        <div class="tab" onclick="switchMainTab('stats')">
+        <div class="tab" data-tab="stats">
           <i class="ti ti-chart-bar"></i> Stats
         </div>
-        <div class="tab" onclick="switchMainTab('config')">
+        <div class="tab" data-tab="config">
           <i class="ti ti-settings"></i> Config
         </div>
       </div>
@@ -450,18 +450,18 @@
         
         <div class="chat-input-area">
           <div class="quick-prompts">
-            <button class="qp-btn" onclick="useQuickPrompt('Crée un PID pour la régulation de pression de refoulement')"><i class="ti ti-adjustments"></i> PID pression</button>
-            <button class="qp-btn" onclick="useQuickPrompt('Génère un bloc de gestion de groupe de pompes en alternance')"><i class="ti ti-refresh"></i> Alternance</button>
-            <button class="qp-btn" onclick="useQuickPrompt('Ajoute une gestion des défauts avec historique')"><i class="ti ti-alert-triangle"></i> Défauts</button>
-            <button class="qp-btn" onclick="useQuickPrompt('Crée le Data Block global de la station')"><i class="ti ti-database"></i> DB Station</button>
-            <button class="qp-btn" onclick="useQuickPrompt('Génère un bloc de communication Modbus TCP')"><i class="ti ti-network"></i> Modbus</button>
+            <button class="qp-btn" data-prompt="Crée un PID pour la régulation de pression de refoulement"><i class="ti ti-adjustments"></i> PID pression</button>
+            <button class="qp-btn" data-prompt="Génère un bloc de gestion de groupe de pompes en alternance"><i class="ti ti-refresh"></i> Alternance</button>
+            <button class="qp-btn" data-prompt="Ajoute une gestion des défauts avec historique"><i class="ti ti-alert-triangle"></i> Défauts</button>
+            <button class="qp-btn" data-prompt="Crée le Data Block global de la station"><i class="ti ti-database"></i> DB Station</button>
+            <button class="qp-btn" data-prompt="Génère un bloc de communication Modbus TCP"><i class="ti ti-network"></i> Modbus</button>
           </div>
           <div class="input-row">
             <textarea class="chat-textarea" id="userInput" rows="1"
               placeholder="Décrivez votre besoin SCL (pompe, vanne, capteur, alarme…) — Entrée pour envoyer, Maj+Entrée pour nouvelle ligne"
               onkeydown="handleKeyPress(event)"
             ></textarea>
-            <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+            <button class="send-btn" id="sendBtn">
               <i class="ti ti-send"></i> Envoyer
             </button>
           </div>
@@ -471,49 +471,49 @@
       <!-- Panel Templates -->
       <div class="panel" id="templates-panel">
         <div class="templates-grid">
-          <div class="tpl-card" onclick="useTemplate('pump_start_stop')">
+          <div class="tpl-card" data-template="pump_start_stop">
             <div class="tpl-icon"><i class="ti ti-circle-dot"></i></div>
             <div class="tpl-name">Démarrage / Arrêt pompe</div>
             <div class="tpl-desc">Gestion complète avec interlocks, temps d'attente et confirmations capteurs</div>
             <div class="tpl-tags"><span class="tpl-tag">FC</span><span class="tpl-tag">Basique</span></div>
           </div>
-          <div class="tpl-card" onclick="useTemplate('pid_control')">
+          <div class="tpl-card" data-template="pid_control">
             <div class="tpl-icon"><i class="ti ti-adjustments"></i></div>
             <div class="tpl-name">Régulation PID</div>
             <div class="tpl-desc">PID débit et pression avec anti-windup, rampe et mode manuel</div>
             <div class="tpl-tags"><span class="tpl-tag">FB</span><span class="tpl-tag">PID_Compact</span></div>
           </div>
-          <div class="tpl-card" onclick="useTemplate('pump_rotation')">
+          <div class="tpl-card" data-template="pump_rotation">
             <div class="tpl-icon"><i class="ti ti-refresh"></i></div>
             <div class="tpl-name">Alternance pompes</div>
             <div class="tpl-desc">Rotation automatique selon heures de marche, avec pompe de secours</div>
             <div class="tpl-tags"><span class="tpl-tag">FB</span><span class="tpl-tag">Groupe</span></div>
           </div>
-          <div class="tpl-card" onclick="useTemplate('level_management')">
+          <div class="tpl-card" data-template="level_management">
             <div class="tpl-icon"><i class="ti ti-wave-sine"></i></div>
             <div class="tpl-name">Gestion niveaux</div>
             <div class="tpl-desc">Contrôle bâche aspirante et château d'eau avec alarmes hauts/bas</div>
             <div class="tpl-tags"><span class="tpl-tag">FC</span><span class="tpl-tag">Capteurs</span></div>
           </div>
-          <div class="tpl-card" onclick="useTemplate('valve_control')">
+          <div class="tpl-card" data-template="valve_control">
             <div class="tpl-icon"><i class="ti ti-valve"></i></div>
             <div class="tpl-name">Vannes motorisées</div>
             <div class="tpl-desc">Commande ouverture/fermeture avec temporisation et retour capteurs fin de course</div>
             <div class="tpl-tags"><span class="tpl-tag">FC</span><span class="tpl-tag">Actionneurs</span></div>
           </div>
-          <div class="tpl-card" onclick="useTemplate('alarm_system')">
+          <div class="tpl-card" data-template="alarm_system">
             <div class="tpl-icon"><i class="ti ti-bell"></i></div>
             <div class="tpl-name">Gestion alarmes</div>
             <div class="tpl-desc">Alarmes process, acquittement opérateur, horodatage et compteur déclenchements</div>
             <div class="tpl-tags"><span class="tpl-tag">FB</span><span class="tpl-tag">Alarmes</span></div>
           </div>
-          <div class="tpl-card" onclick="useTemplate('modbus_tcp')">
+          <div class="tpl-card" data-template="modbus_tcp">
             <div class="tpl-icon"><i class="ti ti-network"></i></div>
             <div class="tpl-name">Communication Modbus TCP</div>
             <div class="tpl-desc">Client/Serveur Modbus TCP avec gestion des erreurs et timeouts</div>
             <div class="tpl-tags"><span class="tpl-tag">FB</span><span class="tpl-tag">Réseau</span></div>
           </div>
-          <div class="tpl-card" onclick="useTemplate('data_logging')">
+          <div class="tpl-card" data-template="data_logging">
             <div class="tpl-icon"><i class="ti ti-database"></i></div>
             <div class="tpl-name">Enregistrement données</div>
             <div class="tpl-desc">Data logging avec horodatage et stockage en DB pour historique SCADA</div>
@@ -525,37 +525,37 @@
       <!-- Panel Snippets -->
       <div class="panel" id="snippets-panel">
         <div class="templates-grid">
-          <div class="tpl-card" onclick="insertSnippet('timer_on')">
+          <div class="tpl-card" data-snippet="timer_on">
             <div class="tpl-icon"><i class="ti ti-clock"></i></div>
             <div class="tpl-name">Temporisateur TON</div>
             <div class="tpl-desc">Bloc temporisateur à la montée avec reset</div>
             <div class="tpl-tags"><span class="tpl-tag">IEC Timer</span></div>
           </div>
-          <div class="tpl-card" onclick="insertSnippet('counter_up')">
+          <div class="tpl-card" data-snippet="counter_up">
             <div class="tpl-icon"><i class="ti ti-counter"></i></div>
             <div class="tpl-name">Compteur CTU</div>
             <div class="tpl-desc">Compteur incrémental avec preset et reset</div>
             <div class="tpl-tags"><span class="tpl-tag">IEC Counter</span></div>
           </div>
-          <div class="tpl-card" onclick="insertSnippet('comparison')">
+          <div class="tpl-card" data-snippet="comparison">
             <div class="tpl-icon"><i class="ti ti-compare"></i></div>
             <div class="tpl-name">Comparaisons</div>
             <div class="tpl-desc">Opérateurs de comparaison (=, <>, <, >, <=, >=)</div>
             <div class="tpl-tags"><span class="tpl-tag">Opérateurs</span></div>
           </div>
-          <div class="tpl-card" onclick="insertSnippet('case_statement')">
+          <div class="tpl-card" data-snippet="case_statement">
             <div class="tpl-icon"><i class="ti ti-switch"></i></div>
             <div class="tpl-name">CASE Statement</div>
             <div class="tpl-desc">Structure de sélection multiple CASE...OF</div>
             <div class="tpl-tags"><span class="tpl-tag">Contrôle</span></div>
           </div>
-          <div class="tpl-card" onclick="insertSnippet('for_loop')">
+          <div class="tpl-card" data-snippet="for_loop">
             <div class="tpl-icon"><i class="ti ti-loop"></i></div>
             <div class="tpl-name">Boucle FOR</div>
             <div class="tpl-desc">Boucle itérative avec index et limites</div>
             <div class="tpl-tags"><span class="tpl-tag">Contrôle</span></div>
           </div>
-          <div class="tpl-card" onclick="insertSnippet('array_decl')">
+          <div class="tpl-card" data-snippet="array_decl">
             <div class="tpl-icon"><i class="ti ti-array"></i></div>
             <div class="tpl-name">Déclaration tableau</div>
             <div class="tpl-desc">Tableau mono/multi-dimensionnel avec types</div>
@@ -620,7 +620,7 @@
               0 = déterministe, 1 = très créatif (0.7 recommandé pour du code)
             </small>
           </div>
-          <button class="save-btn" onclick="saveConfig()">
+          <button class="save-btn" id="saveConfigBtn">
             <i class="ti ti-check"></i> Sauvegarder
           </button>
           <div id="apiStatus"></div>
@@ -657,13 +657,13 @@
           
           <div class="config-section-title">Données locales</div>
           <div style="display: flex; gap: 8px;">
-            <button class="modal-btn" onclick="exportAllData()">
+            <button class="modal-btn" id="exportDataBtn">
               <i class="ti ti-download"></i> Exporter toutes les données
             </button>
-            <button class="modal-btn" onclick="importData()">
+            <button class="modal-btn" id="importDataBtn">
               <i class="ti ti-upload"></i> Importer des données
             </button>
-            <button class="modal-btn" style="color: var(--coral-400);" onclick="clearAllData()">
+            <button class="modal-btn" style="color: var(--coral-400);" id="clearDataBtn">
               <i class="ti ti-trash"></i> Tout effacer
             </button>
           </div>
@@ -679,7 +679,7 @@
     <div class="modal-header" id="modalHeader">Titre</div>
     <div class="modal-body" id="modalBody">Contenu</div>
     <div class="modal-actions">
-      <button class="modal-btn" onclick="closeModal()">Annuler</button>
+      <button class="modal-btn" id="modalCancelBtn">Annuler</button>
       <button class="modal-btn primary" id="modalConfirmBtn">Confirmer</button>
     </div>
   </div>
@@ -775,7 +775,84 @@ document.addEventListener('DOMContentLoaded', () => {
   addWelcomeMessage();
   updateStats();
   renderChatHistorySidebar();
+  setupEventListeners();
 });
+
+function setupEventListeners() {
+  // Boutons toolbar
+  document.getElementById('exportBtn').addEventListener('click', exportChat);
+  document.getElementById('clearBtn').addEventListener('click', clearChat);
+  document.getElementById('fullscreenBtn').addEventListener('click', toggleFullscreen);
+  
+  // Sidebar navigation
+  document.querySelectorAll('.sidebar .sidebar-item[data-tab]').forEach(item => {
+    item.addEventListener('click', function() {
+      const tabName = this.getAttribute('data-tab');
+      switchTab(tabName);
+    });
+  });
+  
+  // Tabs navigation
+  document.querySelectorAll('.tabs .tab[data-tab]').forEach(tab => {
+    tab.addEventListener('click', function() {
+      const tabName = this.getAttribute('data-tab');
+      switchMainTab(tabName);
+    });
+  });
+  
+  // New chat button
+  document.getElementById('newChatBtn').addEventListener('click', newChat);
+  
+  // Send button
+  document.getElementById('sendBtn').addEventListener('click', sendMessage);
+  
+  // Quick prompts
+  document.querySelectorAll('.qp-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const prompt = this.getAttribute('data-prompt');
+      useQuickPrompt(prompt);
+    });
+  });
+  
+  // Templates
+  document.querySelectorAll('.tpl-card[data-template]').forEach(card => {
+    card.addEventListener('click', function() {
+      const templateId = this.getAttribute('data-template');
+      useTemplate(templateId);
+    });
+  });
+  
+  // Snippets
+  document.querySelectorAll('.tpl-card[data-snippet]').forEach(card => {
+    card.addEventListener('click', function() {
+      const snippetId = this.getAttribute('data-snippet');
+      insertSnippet(snippetId);
+    });
+  });
+  
+  // Save config
+  document.getElementById('saveConfigBtn').addEventListener('click', saveConfig);
+  
+  // Modal buttons
+  document.getElementById('modalCancelBtn').addEventListener('click', closeModal);
+  
+  // Data management buttons
+  document.getElementById('exportDataBtn').addEventListener('click', exportAllData);
+  document.getElementById('importDataBtn').addEventListener('click', importData);
+  document.getElementById('clearDataBtn').addEventListener('click', clearAllData);
+  
+  // Temperature slider
+  document.getElementById('temperature').addEventListener('input', function() {
+    document.getElementById('tempValue').textContent = this.value;
+  });
+  
+  // Auto-resize textarea
+  const textarea = document.getElementById('userInput');
+  textarea.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+  });
+}
 
 function loadConfig() {
   document.getElementById('apiKey').value = config.apiKey;
@@ -856,7 +933,11 @@ function switchTab(tabName) {
   document.querySelectorAll('.sidebar .sidebar-item').forEach(item => {
     item.classList.remove('active');
   });
-  event.target.closest('.sidebar-item')?.classList.add('active');
+  
+  // Trouver l'élément cliqué par son attribut onclick
+  const clickedItem = Array.from(document.querySelectorAll('.sidebar .sidebar-item'))
+    .find(item => item.getAttribute('onclick')?.includes(`switchTab('${tabName}')`));
+  if (clickedItem) clickedItem.classList.add('active');
   
   // Main panels
   document.querySelectorAll('.panel').forEach(panel => {
@@ -869,7 +950,11 @@ function switchMainTab(tabName) {
   document.querySelectorAll('.tabs .tab').forEach(tab => {
     tab.classList.remove('active');
   });
-  event.target.closest('.tab').classList.add('active');
+  
+  // Trouver l'élément cliqué par son attribut onclick
+  const clickedTab = Array.from(document.querySelectorAll('.tabs .tab'))
+    .find(tab => tab.getAttribute('onclick')?.includes(`switchMainTab('${tabName}')`));
+  if (clickedTab) clickedTab.classList.add('active');
   
   document.querySelectorAll('.panel').forEach(panel => {
     panel.classList.remove('active');
@@ -1025,19 +1110,39 @@ function addMessage(content, role, meta = '', saveToHistory = true) {
       <div class="msg-meta">${metaText} · ${timestamp}</div>
       <div class="msg-actions">
         ${role === 'agent' ? `
-          <button class="msg-action-btn" onclick="copyMessage(this)"><i class="ti ti-copy"></i> Copier</button>
-          <button class="msg-action-btn" onclick="exportMessage(this)"><i class="ti ti-download"></i> Exporter</button>
+          <button class="msg-action-btn" data-action="copy"><i class="ti ti-copy"></i> Copier</button>
+          <button class="msg-action-btn" data-action="export"><i class="ti ti-download"></i> Exporter</button>
         ` : ''}
       </div>
     </div>
   `;
   
+  // Ajouter les écouteurs d'événements pour les boutons d'action
+  const actionButtons = msgDiv.querySelectorAll('.msg-action-btn');
+  actionButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const action = this.getAttribute('data-action');
+      if (action === 'copy') copyMessage(this);
+      else if (action === 'export') exportMessage(this);
+    });
+  });
+  
   messagesDiv.appendChild(msgDiv);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
   
-  // Ajouter aux actions de copie pour les blocs de code
+  // Ajouter les écouteurs d'événements pour les boutons de code
   msgDiv.querySelectorAll('.code-block-wrapper').forEach(wrapper => {
-    addCodeBlockActions(wrapper);
+    const actionButtons = wrapper.querySelectorAll('.code-action-btn');
+    actionButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const action = this.getAttribute('data-action');
+        const blockId = this.getAttribute('data-block-id');
+        const language = this.getAttribute('data-language');
+        
+        if (action === 'copy') copyCode(blockId);
+        else if (action === 'download') downloadCode(blockId, language);
+      });
+    });
   });
   
   if (saveToHistory && role === 'user') {
@@ -1192,8 +1297,8 @@ function formatResponse(text) {
         <div class="code-block-header">
           <span><i class="ti ti-code"></i> ${language.toUpperCase()}</span>
           <div class="code-block-actions">
-            <button class="code-action-btn" onclick="copyCode('${blockId}')"><i class="ti ti-copy"></i> Copier</button>
-            <button class="code-action-btn" onclick="downloadCode('${blockId}', '${language}')"><i class="ti ti-download"></i> Télécharger</button>
+            <button class="code-action-btn" data-action="copy" data-block-id="${blockId}"><i class="ti ti-copy"></i> Copier</button>
+            <button class="code-action-btn" data-action="download" data-block-id="${blockId}" data-language="${language}"><i class="ti ti-download"></i> Télécharger</button>
           </div>
         </div>
         <pre class="code-block-content"><code>${escapeHtml(trimmedCode)}</code></pre>
@@ -1524,15 +1629,6 @@ function toggleFullscreen() {
     document.exitFullscreen();
   }
 }
-
-// Auto-resize textarea
-document.addEventListener('DOMContentLoaded', () => {
-  const textarea = document.getElementById('userInput');
-  textarea.addEventListener('input', function() {
-    this.style.height = 'auto';
-    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-  });
-});
 </script>
 
 </body>

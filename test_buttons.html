@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Buttons</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; }
+  button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+  .result { margin-top: 20px; padding: 10px; background: #f0f0f0; border-radius: 5px; }
+</style>
+</head>
+<body>
+<h1>Test des boutons</h1>
+<button id="testBtn1">Bouton 1 - Alert</button>
+<button id="testBtn2">Bouton 2 - Console</button>
+<button id="saveConfigBtn">Sauvegarder Config</button>
+<button id="modalCancelBtn">Annuler Modal</button>
+<div class="result" id="result">Résultats apparaîtront ici...</div>
+
+<script>
+console.log('Script chargé');
+
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM prêt');
+  
+  const btn1 = document.getElementById('testBtn1');
+  const btn2 = document.getElementById('testBtn2');
+  const saveBtn = document.getElementById('saveConfigBtn');
+  const cancelBtn = document.getElementById('modalCancelBtn');
+  
+  console.log('Boutons trouvés:', { btn1, btn2, saveBtn, cancelBtn });
+  
+  if (btn1) {
+    btn1.addEventListener('click', () => {
+      alert('Bouton 1 cliqué!');
+      document.getElementById('result').innerHTML += '<p>Bouton 1 OK</p>';
+    });
+  }
+  
+  if (btn2) {
+    btn2.addEventListener('click', () => {
+      console.log('Bouton 2 cliqué!');
+      document.getElementById('result').innerHTML += '<p>Bouton 2 OK (voir console)</p>';
+    });
+  }
+  
+  if (saveBtn) {
+    saveBtn.addEventListener('click', () => {
+      console.log('Sauvegarde config...');
+      document.getElementById('result').innerHTML += '<p>Save Config OK</p>';
+    });
+  }
+  
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', () => {
+      console.log('Annuler modal...');
+      document.getElementById('result').innerHTML += '<p>Cancel Modal OK</p>';
+    });
+  }
+});
+</script>
+</body>
+</html>
